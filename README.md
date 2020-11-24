@@ -1,1 +1,0 @@
-Pokepedia for pokemon trainer

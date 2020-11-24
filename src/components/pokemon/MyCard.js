@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
+import './MyCard.css'
 
 const Sprite = styled.img`
     height: 5rem;
@@ -42,14 +43,22 @@ export default class Card extends Component {
         this.setState({name,imageUrl,pokemonIndex});
     }
 
+    handleClick = event => {
+        const myAllPoke = JSON.parse(localStorage.getItem('myPokeName')) || []
+        const index = myAllPoke.indexOf(this.state.name);
+        if (index > -1) {
+            myAllPoke.splice(index, 1);
+          }
+        localStorage.setItem('myPokeName', JSON.stringify(myAllPoke));
+        window.location.reload();
+    }
 
     render() {
         
         return (
             <div className="col-md-3 col-sm-6 mb-3">
-            <LinkStyle to={`pokemon/${this.state.pokemonIndex}`}>
                 <CardStyle className='card'>
-                    <h5 className='card-header'>{this.state.pokemonIndex}{}</h5>
+                    <h5 className='card-header'><span class="close" onClick={this.handleClick}>&times;</span></h5>
                     <Sprite 
                         className='card-img-top rounded mx-auto mt-2'
                         src={this.state.imageUrl}
@@ -62,7 +71,6 @@ export default class Card extends Component {
                         </h5>
                     </div>
                 </CardStyle>
-                </LinkStyle>
             </div>
         )
     }

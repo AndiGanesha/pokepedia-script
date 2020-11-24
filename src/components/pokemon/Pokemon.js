@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import './Pokemon.css';
@@ -31,16 +31,6 @@ const Logo = styled.img`
   margin: 0.3rem;
 `;
 
-const CatchStyle = styled.div`
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.2s cubic-bezier(0.25, 0.7, 0.25, 0.3);
-    &:hover{
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 10px rgba(0, 0, 0, 0.2);
-    }
-`; 
-
-
-
 export default class Pokemon extends Component {
 
     state= {
@@ -65,7 +55,8 @@ export default class Pokemon extends Component {
         evs:'',
         hatchStep:'',
         catch:false,
-        width:window.innerWidth
+        width:window.innerWidth,
+        afterClick:false
     };
 
     componentWillMount() {
@@ -126,6 +117,9 @@ export default class Pokemon extends Component {
             myPokeNameValue.push(newPoke);
             localStorage.setItem('myPokeName', JSON.stringify(myPokeNameValue));
             modal.style.display = "none";
+            setTimeout(function() { //Start the timer
+                window.location.reload();//After 1 second, set render to true
+            }.bind(this), 500)
         }else{
             alert('this name has been taken by other pokemon')
         }
@@ -268,6 +262,10 @@ export default class Pokemon extends Component {
 
     }
 
+    handleBtnClk = event =>{
+        window.location.reload();
+    }
+    
     render() {
         const { width } = this.state;
         const isMobile = width <= 767;
@@ -536,7 +534,7 @@ export default class Pokemon extends Component {
                                             <br />
                                             <input type='text' className='form-control-plaintext' placeholder='Pokemon Nickname' id='inputValue'></input>
                                             <br />
-                                            <button type="submit" class="btn btn-primary mt-3">Catch</button>                                            
+                                            <button onClick={this.handleBtnClk} type="submit" class="btn btn-primary mt-3">Catch</button>
                                         </form> : <p>Next Time!</p>}
                                 </div>
                             </div>

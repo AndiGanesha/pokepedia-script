@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import MyCard from './MyCard';
-import InfiniteScroll from 'react-infinite-scroll-component';
-
-var size = 16;
 
 export default class List extends Component {
 
@@ -13,17 +10,6 @@ export default class List extends Component {
             myAllPoke: JSON.parse(localStorage.getItem('myPokeName')) || []
         }
     }
-
-    fetchMoreData = () => {
-        if (this.state.myAllPoke.length >= this.state.count) {
-          this.setState({hasMore: false });
-          return;
-        }
-        setTimeout(() => {
-          size = 16+size; //resize the data with the request from user
-          this.setState({pokemonShow: this.state.pokemon.slice(0,size)});
-        }, 1500);
-      };
 
 
     render() {
